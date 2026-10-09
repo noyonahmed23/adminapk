@@ -467,15 +467,15 @@ fun KheloBDApp() {
                   id = userId,
                   username = name,
                   fullName = name,
-                  phone = "01XXXXXXXXX",
-                  email = "$name@khelobd.com",
-                  walletBalance = 300.0,
-                  isOnline = true,
-                  matchesPlayed = 42,
-                  wins = 28,
-                  totalEarnings = 3500.0,
-                  freeFireUid = "54829${userId.takeLast(3)}",
-                  pubgUid = "51482${userId.takeLast(4)}"
+                  phone = "",
+                  email = "",
+                  walletBalance = 0.0,
+                  isOnline = false,
+                  matchesPlayed = 0,
+                  wins = 0,
+                  totalEarnings = 0.0,
+                  freeFireUid = "",
+                  pubgUid = ""
                 )
               },
               onTeamClick = { team ->
@@ -556,15 +556,15 @@ fun KheloBDApp() {
                   id = userId,
                   username = name,
                   fullName = name,
-                  phone = "01XXXXXXXXX",
-                  email = "$name@khelobd.com",
-                  walletBalance = 300.0,
-                  isOnline = true,
-                  matchesPlayed = 42,
-                  wins = 28,
-                  totalEarnings = 3500.0,
-                  freeFireUid = "54829${userId.takeLast(3)}",
-                  pubgUid = "51482${userId.takeLast(4)}"
+                  phone = "",
+                  email = "",
+                  walletBalance = 0.0,
+                  isOnline = false,
+                  matchesPlayed = 0,
+                  wins = 0,
+                  totalEarnings = 0.0,
+                  freeFireUid = "",
+                  pubgUid = ""
                 )
               }
             )
@@ -606,15 +606,15 @@ fun KheloBDApp() {
                     id = userId,
                     username = name,
                     fullName = name,
-                    phone = "01XXXXXXXXX",
-                    email = "$name@khelobd.com",
-                    walletBalance = 300.0,
-                    isOnline = true,
-                    matchesPlayed = 42,
-                    wins = 28,
-                    totalEarnings = 3500.0,
-                    freeFireUid = "54829${userId.takeLast(3)}",
-                    pubgUid = "51482${userId.takeLast(4)}"
+                    phone = "",
+                    email = "",
+                    walletBalance = 0.0,
+                    isOnline = false,
+                    matchesPlayed = 0,
+                    wins = 0,
+                    totalEarnings = 0.0,
+                    freeFireUid = "",
+                    pubgUid = ""
                   )
                 }
               )
@@ -708,15 +708,15 @@ fun KheloBDApp() {
                   id = userId,
                   username = name,
                   fullName = name,
-                  phone = "01XXXXXXXXX",
-                  email = "$name@khelobd.com",
-                  walletBalance = 300.0,
-                  isOnline = true,
-                  matchesPlayed = 42,
-                  wins = 28,
-                  totalEarnings = 3500.0,
-                  freeFireUid = "54829${userId.takeLast(3)}",
-                  pubgUid = "51482${userId.takeLast(4)}"
+                  phone = "",
+                  email = "",
+                  walletBalance = 0.0,
+                  isOnline = false,
+                  matchesPlayed = 0,
+                  wins = 0,
+                  totalEarnings = 0.0,
+                  freeFireUid = "",
+                  pubgUid = ""
                 )
               }
             )
@@ -731,15 +731,15 @@ fun KheloBDApp() {
                   id = userId,
                   username = name,
                   fullName = name,
-                  phone = "01XXXXXXXXX",
-                  email = "$name@khelobd.com",
-                  walletBalance = 300.0,
-                  isOnline = true,
-                  matchesPlayed = 42,
-                  wins = 28,
-                  totalEarnings = 3500.0,
-                  freeFireUid = "54829${userId.takeLast(3)}",
-                  pubgUid = "51482${userId.takeLast(4)}"
+                  phone = "",
+                  email = "",
+                  walletBalance = 0.0,
+                  isOnline = false,
+                  matchesPlayed = 0,
+                  wins = 0,
+                  totalEarnings = 0.0,
+                  freeFireUid = "",
+                  pubgUid = ""
                 )
               },
               onTeamClick = { currentScreen = Screen.TEAMS }
