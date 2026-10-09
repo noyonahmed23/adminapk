@@ -13,6 +13,7 @@ val CyberGreen = Color(0xFF00E676)
 val CyberGreenGlow = Color(0xFF69F0AE)
 val CyberRed = Color(0xFFFF2A4A)
 val CyberCyan = Color(0xFF00E5FF)
+val CyberBlue = Color(0xFF2979FF)
 val CyberGold = Color(0xFFFFD700)
 
 val TextPrimary = Color(0xFFF0F4F8)
