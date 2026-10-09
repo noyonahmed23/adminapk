@@ -461,7 +461,6 @@ fun KheloBDApp() {
                 selectedChallengeId = ch.id
                 currentScreen = Screen.CHALLENGE_DETAIL
               },
-              onNavigateToDeposit = { currentScreen = Screen.ACCOUNT },
               onPlayerClick = { userId, name ->
                 publicProfileUser = UserProfile(
                   id = userId,
@@ -703,6 +702,7 @@ fun KheloBDApp() {
                   snackbarHostState.showSnackbar(result.getOrDefault("টিম চ্যালেঞ্জ পাঠানো হয়েছে!"))
                 }
               },
+              onNavigateToDeposit = { currentScreen = Screen.ACCOUNT },
               onPlayerClick = { userId, name ->
                 publicProfileUser = UserProfile(
                   id = userId,
