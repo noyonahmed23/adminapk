@@ -461,6 +461,7 @@ fun KheloBDApp() {
                 selectedChallengeId = ch.id
                 currentScreen = Screen.CHALLENGE_DETAIL
               },
+              onNavigateToDeposit = { currentScreen = Screen.ACCOUNT },
               onPlayerClick = { userId, name ->
                 publicProfileUser = UserProfile(
                   id = userId,
@@ -771,7 +772,12 @@ fun KheloBDApp() {
               onNavigateToTournaments = { currentScreen = Screen.TOURNAMENTS },
               onNavigateToChallenges = { currentScreen = Screen.CHALLENGES },
               onNavigateToTeams = { currentScreen = Screen.TEAMS },
-              onNavigateToNotifications = { showNotificationsDialog = true }
+              onNavigateToNotifications = { showNotificationsDialog = true },
+              onNavigateToDeposit = { currentScreen = Screen.ACCOUNT },
+              onLogout = {
+                runCatching { com.google.firebase.auth.FirebaseAuth.getInstance().signOut() }
+                currentScreen = Screen.HOME
+              }
             )
           }
         }
