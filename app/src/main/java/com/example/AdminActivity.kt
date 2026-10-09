@@ -182,7 +182,7 @@ fun AdminAppRoot(onLaunchUserApp: () -> Unit) {
                   .clip(CircleShape)
                   .background(CyberGreen)
               )
-              Text(text = "Logged in: Mohammad Noyon", color = TextPrimary, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+              Text(text = "Admin Console", color = TextPrimary, fontWeight = FontWeight.Bold, fontSize = 12.sp)
             }
           }
         }
