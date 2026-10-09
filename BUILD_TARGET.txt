@@ -1,0 +1,5 @@
+ADMIN APK
+Application ID: com.khelobd.admin
+Launcher: AdminActivity
+
+Install separately from the user APK.
