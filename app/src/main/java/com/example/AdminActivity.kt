@@ -75,12 +75,133 @@ class AdminActivity : ComponentActivity() {
     enableEdgeToEdge()
     setContent {
       MyApplicationTheme(darkTheme = true) {
-        AdminAppRoot(
+        AdminAccessGate(
           onLaunchUserApp = {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MainActivity::class.java))
           }
         )
+      }
+    }
+  }
+}
+
+/**
+ * UI-level defense in depth. Admin API endpoints must independently verify the Firebase token
+ * and admin role; hiding this screen alone is not a server security boundary.
+ */
+@Composable
+private fun AdminAccessGate(onLaunchUserApp: () -> Unit) {
+  val auth = remember { runCatching { com.google.firebase.auth.FirebaseAuth.getInstance() }.getOrNull() }
+  val scope = rememberCoroutineScope()
+  var authorized by remember { mutableStateOf(false) }
+  var checking by remember { mutableStateOf(true) }
+  var email by remember { mutableStateOf("") }
+  var password by remember { mutableStateOf("") }
+  var errorMessage by remember { mutableStateOf<String?>(null) }
+
+  fun hasAdminClaim(claims: Map<String, Any>): Boolean =
+    claims["admin"] == true || claims["role"]?.toString() == "admin"
+
+  LaunchedEffect(auth) {
+    val currentUser = auth?.currentUser
+    if (auth == null) {
+      errorMessage = "Firebase configuration পাওয়া যায়নি। Admin login বন্ধ রাখা হয়েছে।"
+    } else if (currentUser != null) {
+      try {
+        authorized = hasAdminClaim(currentUser.getIdToken(true).await().claims)
+        if (!authorized) {
+          auth.signOut()
+          errorMessage = "এই অ্যাকাউন্টে server-issued admin permission নেই।"
+        }
+      } catch (_: Exception) {
+        auth.signOut()
+        errorMessage = "Admin permission যাচাই করা যায়নি। আবার login করুন।"
+      }
+    }
+    checking = false
+  }
+
+  if (authorized) {
+    AdminAppRoot(onLaunchUserApp = onLaunchUserApp)
+    return
+  }
+
+  Scaffold(containerColor = GamingDarkBackground) { padding ->
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(padding)
+        .padding(24.dp),
+      verticalArrangement = Arrangement.Center,
+      horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+      Text(
+        text = "KHELO BD ADMIN",
+        color = Color.White,
+        fontWeight = FontWeight.Black,
+        fontSize = 24.sp
+      )
+      Spacer(modifier = Modifier.height(8.dp))
+      Text(
+        text = "Firebase admin permission ছাড়া Admin Console খোলা যাবে না।",
+        color = TextSecondary,
+        textAlign = TextAlign.Center
+      )
+      Spacer(modifier = Modifier.height(24.dp))
+      OutlinedTextField(
+        value = email,
+        onValueChange = { email = it.trim() },
+        label = { Text("Admin email") },
+        singleLine = true,
+        enabled = !checking && auth != null,
+        modifier = Modifier.fillMaxWidth()
+      )
+      Spacer(modifier = Modifier.height(12.dp))
+      OutlinedTextField(
+        value = password,
+        onValueChange = { password = it },
+        label = { Text("Password") },
+        singleLine = true,
+        visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
+        enabled = !checking && auth != null,
+        modifier = Modifier.fillMaxWidth()
+      )
+      errorMessage?.let {
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(text = it, color = CyberRed, textAlign = TextAlign.Center)
+      }
+      Spacer(modifier = Modifier.height(20.dp))
+      Button(
+        enabled = !checking && auth != null && email.isNotBlank() && password.isNotBlank(),
+        onClick = {
+          scope.launch {
+            checking = true
+            errorMessage = null
+            try {
+              val firebase = auth ?: throw IllegalStateException("Firebase configuration missing")
+              val user = firebase.signInWithEmailAndPassword(email, password).await().user
+                ?: throw IllegalStateException("Firebase user পাওয়া যায়নি")
+              if (hasAdminClaim(user.getIdToken(true).await().claims)) {
+                authorized = true
+              } else {
+                firebase.signOut()
+                errorMessage = "Login হয়েছে, কিন্তু এই অ্যাকাউন্টে admin permission নেই।"
+              }
+            } catch (_: Exception) {
+              auth?.signOut()
+              errorMessage = "Login অথবা admin permission যাচাই ব্যর্থ হয়েছে।"
+            } finally {
+              checking = false
+            }
+          }
+        },
+        modifier = Modifier.fillMaxWidth()
+      ) {
+        if (checking) {
+          CircularProgressIndicator(modifier = Modifier.size(20.dp))
+        } else {
+          Text("Admin Login")
+        }
       }
     }
   }
